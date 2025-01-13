@@ -3,10 +3,13 @@ def main():
     text = get_text(book_file)
     word_count = count_words(text)
     char_count = count_characters(text)
-    # print(text)
-    # print(f"The books has {word_count} words.")
-    char_count.sort(key=sort_on_character)
-    print(char_count)
+    char_count.sort(reverse=True, key=sort_on_times)
+    print(f"--- Begin report of {book_file} ---")
+    print(f"{word_count} words were found in the document")
+    print("")
+    for char in char_count:
+        print(f"The '{char['character']}' character was found {char['times']} times")
+    print("--- End report ---")
 
 def get_text(book_file):
     with open(book_file) as f:
@@ -29,7 +32,7 @@ def count_characters(text):
         count_list.append({"character": char, "times": character_count[char]})
     return count_list
 
-def sort_on_character(dict):
-    return dict["character"]
+def sort_on_times(dict):
+    return dict["times"]
 
 main()
