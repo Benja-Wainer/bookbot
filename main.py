@@ -5,9 +5,8 @@ def main():
     char_count = count_characters(text)
     # print(text)
     # print(f"The books has {word_count} words.")
-    print("Character count:")
-    for char in char_count:
-        print(f"{char} appears {char_count[char]} times.")
+    char_count.sort(key=sort_on_character)
+    print(char_count)
 
 def get_text(book_file):
     with open(book_file) as f:
@@ -20,11 +19,17 @@ def count_words(text):
 
 def count_characters(text):
     character_count = {}
+    count_list = []
     for char in text.lower():
         if char in character_count:
             character_count[char] += 1
-        else:
+        elif char.isalpha():
             character_count[char] = 1
-    return character_count
+    for char in character_count:
+        count_list.append({"character": char, "times": character_count[char]})
+    return count_list
+
+def sort_on_character(dict):
+    return dict["character"]
 
 main()
